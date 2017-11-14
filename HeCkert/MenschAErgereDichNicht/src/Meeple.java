@@ -1,17 +1,30 @@
+//    Author  Sebastian Hentges
+//    EmbeddedSystemWS17\HeCkert\MenschAErgereDichNicht\src\Meeple.java
+//    
+//    Meeple class represents tokens of board games.
+//
+
 public class Meeple {
 
     private int position;
 
     private char color;
 
-    public int setPoition(int newPosition) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+    // Made final so it can be called in constructor without later issues
+    final public void setPosition(int newPosition) {
+        this.position = newPosition;
+        // TODO Error Handling
     }
 
-    public void Meeple(char color) {
+    Meeple(char color, int initialPosition) {
+        this.color=color;
+        this.setPosition(initialPosition);
+        // TODO Error Handling
     }
 
     public int getPosition() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.position;
+        // TODO Error Handling
     }
 }

@@ -4,6 +4,12 @@ public class Player {
 
     private String name;
 
+    Player(char color, String name) {
+        this.name = name;
+        this.color = color;
+        // TODO Error Handling
+    }
+    
     public void startTurn() {
     }
 
@@ -11,10 +17,9 @@ public class Player {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void Player(char color) {
-    }
 
     public String getName() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return this.name;
+        // TODO Error Handling
     }
 }
