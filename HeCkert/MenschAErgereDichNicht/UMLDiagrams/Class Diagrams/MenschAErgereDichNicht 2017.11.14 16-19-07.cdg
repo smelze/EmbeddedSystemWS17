@@ -20,7 +20,7 @@
         <Method name="showGameBoard" returnType="void" visibility="public"/>
       </Methods>
     </Class>
-    <Class name="main" package="" visibility="public" xPosition="320.0" yPosition="20.0">
+    <Class name="main" package="" visibility="public" xPosition="79.0" yPosition="241.0">
       <Fields/>
       <Constructors/>
       <Methods>
@@ -29,7 +29,7 @@
         </Method>
       </Methods>
     </Class>
-    <Class name="Meeple" package="" visibility="public" xPosition="620.0" yPosition="20.0">
+    <Class name="Meeple" package="" visibility="public" xPosition="382.0" yPosition="29.0">
       <Fields>
         <Field name="position" type="int" visibility="private"/>
         <Field name="color" type="char" visibility="private"/>

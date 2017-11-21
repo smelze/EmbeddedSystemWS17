@@ -1,6 +1,7 @@
 public class Rules {
 
     private int diceResult;
+    private GameBoard board;
 
     private boolean checkFieldStart() {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -30,7 +31,12 @@ public class Rules {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void Rules() {
+    public Rules() {
+        int players = 4;
+        board = new GameBoard(players);
+        System.out.println("Rules finsihed");
+        Player player = new Player('r', "Peter");
+        player.startTurn();
     }
 
     public void gameFlow() {
