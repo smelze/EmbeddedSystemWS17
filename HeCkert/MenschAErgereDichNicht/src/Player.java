@@ -14,11 +14,15 @@ private static final boolean DEBUG_MODE = true;
     }
     
     /**
-     * 
+     * Promts a request to the user to roll the die and waits until the user
+     * presses the r key
      */
     public void startTurn() {
-        System.out.println(name + " it is your turn!");
-        // TODO next Step -> Roll dice(?) -> call choose field(?)
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println(name + " it is your turn! (proceed by rolling the die with r + Enter)");
+        while(!(sc.nextLine().equalsIgnoreCase("r"))){}
+        // TODO Error Handling
     }
 
     
