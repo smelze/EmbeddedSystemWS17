@@ -4,7 +4,7 @@ public class Figur {
 
     private int Position;
 
-    private bool Beweglichkeit;
+    private boolean Beweglichkeit;
 
     public int PositionSetzen(int PositionNeu) {
         throw new UnsupportedOperationException("Not supported yet.");
