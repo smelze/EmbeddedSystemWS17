@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ClassDiagram name="MenschAergereDichNicht">
+  <ClassDiagramComponents>
+    <Class name="Computer" package="" visibility="public" xPosition="20.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="FigurAuswaehlen" returnType="void" visibility="private"/>
+      </Methods>
+    </Class>
+    <Class name="Figur" package="" visibility="public" xPosition="320.0" yPosition="20.0">
+      <Fields>
+        <Field name="Nummer" type="int" visibility="private"/>
+        <Field name="Position" type="int" visibility="private"/>
+        <Field name="Beweglichkeit" type="boolean" visibility="private"/>
+        <Field name="Beweglichkeit" type="bool" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="PositionSetzen" returnType="int" visibility="public">
+          <Argument type="int" name="PositionNeu"/>
+        </Method>
+        <Method name="PositionLesen" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Mensch" package="" visibility="public" xPosition="620.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="FigurAuswaehlen" returnType="int" visibility="private">
+          <Argument type="int" name="Nummer"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="MenschAergereDichNicht" package="menschaergeredichnicht" visibility="public" xPosition="920.0" yPosition="20.0">
+      <Fields/>
+      <Constructors/>
+      <Methods>
+        <Method name="main" returnType="void" visibility="public" isStatic="true">
+          <Argument type="String[]" name="args"/>
+        </Method>
+      </Methods>
+    </Class>
+    <Class name="Spielbrett" package="" visibility="public" xPosition="1220.0" yPosition="20.0">
+      <Fields>
+        <Field name="Lauffeld" type="Array" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="PositionLesenAlle" returnType="void" visibility="public"/>
+        <Method name="SpielbrettAnzeigen" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Spieler" package="" visibility="public" isAbstract="true" xPosition="1520.0" yPosition="20.0">
+      <Fields>
+        <Field name="Name" type="string" visibility="public"/>
+        <Field name="StartHaus" type="int[]" visibility="public"/>
+        <Field name="ZielHaus" type="int[]" visibility="public"/>
+        <Field name="PositionZielhaus" type="int" visibility="public"/>
+        <Field name="PositionStarthaus" type="int" visibility="public"/>
+      </Fields>
+      <Constructors>
+        <Constructor visibility="public">
+          <Argument type="string" name="Name"/>
+        </Constructor>
+      </Constructors>
+      <Methods>
+        <Method name="FigurAuswaehlen" returnType="int" visibility="private">
+          <Argument type="int" name="Nummer"/>
+        </Method>
+        <Method name="FigurBewegen" returnType="int" visibility="private">
+          <Argument type="int" name="Nummer"/>
+        </Method>
+        <Method name="ZugAusfuehren" returnType="void" visibility="public"/>
+      </Methods>
+    </Class>
+    <Class name="Wuerfel" package="" visibility="public" xPosition="1820.0" yPosition="20.0">
+      <Fields>
+        <Field name="rand" type="Random" visibility="package"/>
+        <Field name="Augenzahl" type="int" visibility="private"/>
+      </Fields>
+      <Constructors/>
+      <Methods>
+        <Method name="wuerfeln" returnType="int" visibility="public"/>
+      </Methods>
+    </Class>
+  </ClassDiagramComponents>
+  <ClassDiagramRelations>
+    <IsRelation name="is" source="Mensch" target="Spieler"/>
+    <IsRelation name="is" source="Computer" target="Spieler"/>
+  </ClassDiagramRelations>
+</ClassDiagram>
