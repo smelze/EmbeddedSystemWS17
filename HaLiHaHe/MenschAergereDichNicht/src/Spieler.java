@@ -13,9 +13,9 @@ public abstract class Spieler {
     public Spieler(string Name) {
     }
 
-    private int FigurAuswaehlen(int Nummer) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+    abstract int FigurAuswaehlen() ;
+        
+   
 
     private int FigurBewegen(int Nummer) {
         throw new UnsupportedOperationException("Not supported yet.");
