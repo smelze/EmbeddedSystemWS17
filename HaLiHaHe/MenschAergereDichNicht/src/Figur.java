@@ -4,13 +4,28 @@ public class Figur {
 
     private int Position;
 
-    private boolean Beweglichkeit;
+    public boolean Beweglichkeit;
+    
+    public Figur(int nummer, int startPosition)
+    {
+        Nummer = nummer;
+        Position = startPosition;
+    }
 
-    public int PositionSetzen(int PositionNeu) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void PositionSetzen(int wuerfelZahl) {
+        if (Beweglichkeit)
+        {
+            Position = Position + wuerfelZahl;
+        }
+        else
+        {
+            System.out.println("Die Figur "+ Nummer +"kann nicht um" + wuerfelZahl+" bewegt werden");
+        }
     }
 
     public int PositionLesen() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return Position;
     }
+
+  
 }
