@@ -1,3 +1,5 @@
+package menschaergeredichnicht;
+
 import java.util.Random;
 import java.util.Date;
 

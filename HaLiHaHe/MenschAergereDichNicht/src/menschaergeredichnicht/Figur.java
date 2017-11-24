@@ -1,21 +1,31 @@
+package menschaergeredichnicht;
+
 public class Figur {
 
     private int Nummer;
 
     private int Position;
+    
+    private int AnzahlPositionen; 
 
     public boolean Beweglichkeit;
     
-    public Figur(int nummer, int startPosition)
+    public Figur(int nummer, int startPosition, int anzahlPositionen)
     {
         Nummer = nummer;
         Position = startPosition;
+        AnzahlPositionen = anzahlPositionen;
     }
 
     public void PositionSetzen(int wuerfelZahl) {
         if (Beweglichkeit)
         {
             Position = Position + wuerfelZahl;
+            
+            if (Position > AnzahlPositionen)
+            { 
+                Position = Position - AnzahlPositionen; //AnzahlPositionen wäre besser in der Klasse Spielfeld
+            }
         }
         else
         {

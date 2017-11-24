@@ -1,6 +1,8 @@
+package menschaergeredichnicht;
+
 public class Spielbrett {
 
-    private Array Lauffeld;
+    private int[] Lauffeld;
 
     public void PositionLesenAlle() {
     }
