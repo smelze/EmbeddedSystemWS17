@@ -1,6 +1,6 @@
 public abstract class Spieler {
 
-    public string Name;
+    public String Name;
 
     public int[] StartHaus;
 
@@ -9,8 +9,14 @@ public abstract class Spieler {
     public int PositionZielhaus;
 
     public int PositionStarthaus;
+    
+    private int SpielerNummer ;    
+    
 
-    public Spieler(string Name) {
+    public Spieler(String name, int spielernummer) 
+    {
+        Name = name;
+        SpielerNummer = spielernummer;
     }
 
     private int FigurAuswaehlen(int Nummer) {
@@ -23,4 +29,9 @@ public abstract class Spieler {
 
     public void ZugAusfuehren() {
     }
+   
+    
+    
+  
+    
 }
