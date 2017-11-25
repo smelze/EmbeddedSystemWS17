@@ -1,4 +1,5 @@
 //--- imports ----------------------------------------------------------------
+import java.awt.EventQueue;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -79,7 +80,15 @@ public class Rules {
                     //Sinnloser Testlkommentar zwecks übertragungstest
             }    
         }
-        gameBoard = new GameBoard(playerCount);
+        
+        // Implements gameboard
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                gameBoard = new GameBoard(playerCount);
+                gameBoard.setVisible(true);
+            }
+        });
         
     }
 }
