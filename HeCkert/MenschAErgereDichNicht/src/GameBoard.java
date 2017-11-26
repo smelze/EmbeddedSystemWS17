@@ -156,8 +156,24 @@ public class GameBoard extends JFrame{
         }
     }
 
+    /**
+     * Returns the positions of every meeple of the specified color.
+     * @param color
+     * Can be <code>r, b, g, y</code>
+     * @return 
+     * Returns an int array with four entrys.
+     */
     public int[] checkMeeple(char color) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        int[] positions = new int[4];
+        int i = 0;
+        while(MeepleIterator.hasNext()){
+            Meeple m = MeepleIterator.next();
+            if(m.getColor() == color ){
+                positions[i]=m.getPosition();
+                i++;
+            }            
+        }
+        return positions;
     }
 
     public void showGameBoard() {
