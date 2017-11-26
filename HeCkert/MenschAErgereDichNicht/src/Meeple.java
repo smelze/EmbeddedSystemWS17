@@ -33,4 +33,8 @@ public class Meeple {
     public int getPosition() {
         return this.position;
     }
+    
+    public char getColor(){
+        return this.color;
+    }
 }
