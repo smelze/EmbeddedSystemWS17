@@ -6,12 +6,12 @@ Meeple are set to positions 0 - 15 (the "out" areas) of the board.
 Positions 0-3(r), 4-7(g), 8-11(b) and 12-15(y) represent the out areas of 
 red, green, blue and yellow respectively
 
-Positions 16 - 56 represent the circle track.
+Positions 16 - 55 represent the circle track.
 Positions 16(r), 26(b), 36(g) and 46(y) represent the start points of 
 red, blue, green and yellow respectively.
 
-Positions 47 - 63 represent the "home" areas of the board.
-Positions 47-50(r), 51-54(g), 55-58(b) and 59-62(y) represent the home areas of 
+Positions 56 - 72 represent the "home" areas of the board.
+Positions 56-59(r), 60-63(g), 64-57(b) and 58-61(y) represent the home areas of 
 red, green, blue and yellow respectively
 */
 
