@@ -32,14 +32,34 @@ private static final boolean DEBUG_MODE = true;
      * <code>int</code> and recurses if it is an other datatype until an 
      * <code>int</code> is entered.
      *
+     * @param possibleStartPositions
      * @return <code>int</code> value of the position where the Meeple should be placed is returned.
      */
     public int chooseField(int[]possibleStartPositions) {
-        System.out.println(this.name + " please choose the field you want to move your meeple to by typing a number");
+        System.out.println(this.name + " please choose the field you want to move your meeple from by typing the number.");
+        System.out.println("Possible movements start from:");
+        for(int i=0; i<possibleStartPositions.length; i++)
+        {
+            System.out.print(possibleStartPositions[i]);
+            if(i!=(possibleStartPositions.length -1))
+                System.out.print(" , ");
+        }
         Scanner userInput = new Scanner(System.in);
         int choosenField = -1; 
         try{
-            choosenField=userInput.nextInt();
+            boolean loop = true;
+            while(loop){
+                choosenField=userInput.nextInt();
+                for(int i=0; i<possibleStartPositions.length; i++)
+                {
+                    if(choosenField == possibleStartPositions[i])
+                        loop=false;
+                }
+                if(loop == true){
+                    System.out.println(choosenField + " is not an Option at the moment.");
+                    System.out.println("Please chose again:");
+                }
+            }
         }
         catch(InputMismatchException e1){
             choosenField = this.chooseField(possibleStartPositions);
