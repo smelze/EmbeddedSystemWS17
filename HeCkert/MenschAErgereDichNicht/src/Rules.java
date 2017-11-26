@@ -28,7 +28,7 @@ public class Rules {
         return (int)(Math.random()*10);
     }// End of rollDice()
     
-    private int[] checkForcedAction(char color) {
+    private int[] checkForcedAction(char color, int diceCount) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
@@ -37,6 +37,8 @@ public class Rules {
         int[] meeplePosition={99,99,99,99},returnPositions={99,99,99,99};
         int counter, returnCounter=0, setPosition=0,startPosition=16;
         //----------------------------------------------
+        
+        //ersetzen durch getFunktion... wird noch erstellt
         switch (color){
             case 'r':
                 setPosition = 0;
@@ -84,9 +86,11 @@ public class Rules {
 
     public int[] checkPossibleMoves(int diceCount,int playerCounter) {
         //--- local variables ------------------------------------------
-        int[] output={1,2,3};
+        int[] possibleMoves;
         char color='r';
         //--------------------------------------------------------------
+        
+        //Ersetzen durch getfunktion wird noch erstellt
         switch (playerCounter){
             case 0:
                 color ='r';
@@ -104,11 +108,13 @@ public class Rules {
                 //implement Error handeling
                 break;
         }
-        if (diceCount ==6)
-            return checkForcedActionSix(color);
-        else
-            return checkForcedAction(color);
-        
+        if (diceCount == 6){
+            possibleMoves=checkForcedActionSix(color);
+        } 
+        else{
+             possibleMoves=checkForcedAction(color, diceCount);                      
+        }
+            return possibleMoves;
     }//End of checkPossibleMoves()
 
     Rules() {
