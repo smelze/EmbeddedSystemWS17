@@ -8,6 +8,6 @@ public class main {
         Rules menschAErgereDichNicht = new Rules();
         //-------------------------------------------
         
-        menschAErgereDichNicht.gameFlow();
+        menschAErgereDichNicht.initGame();
     }
 }

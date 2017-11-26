@@ -34,7 +34,7 @@ private static final boolean DEBUG_MODE = true;
      *
      * @return <code>int</code> value of the position where the Meeple should be placed is returned.
      */
-    public int chooseField() {
+    public int chooseField(int[]possibleStartPositions) {
         System.out.println(this.name + " please choose the field you want to move your meeple to by typing a number");
         Scanner userInput = new Scanner(System.in);
         int choosenField = -1; 
@@ -42,7 +42,7 @@ private static final boolean DEBUG_MODE = true;
             choosenField=userInput.nextInt();
         }
         catch(InputMismatchException e1){
-            choosenField = this.chooseField();
+            choosenField = this.chooseField(possibleStartPositions);
             
             if(DEBUG_MODE){
             System.out.println("InputMismatchException");    

@@ -16,8 +16,9 @@ red, green, blue and yellow respectively
 */
 
 import java.util.*;
+import javax.swing.JFrame;
 
-public class GameBoard {
+public class GameBoard extends JFrame{
 
     private ArrayList<Meeple> MeepleList;
     private ListIterator<Meeple> MeepleIterator;
@@ -43,6 +44,18 @@ public class GameBoard {
                 MeepleList.add(new Meeple(color,i));
             }
         }
+        initUI();
+    }
+    
+        private void initUI() {
+
+        add(new MaenschAErgereDichNichtPanel());
+
+        pack();
+
+        setTitle("Game");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
     }
     
     /**
@@ -59,7 +72,7 @@ public class GameBoard {
         }
     }
 
-    public int[] checkMeeple() {
+    public int[] checkMeeple(char color) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

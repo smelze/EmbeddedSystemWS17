@@ -1,4 +1,5 @@
 //--- imports ----------------------------------------------------------------
+import java.awt.EventQueue;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -23,22 +24,91 @@ public class Rules {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    private char checkForcedAction(char color) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     public int rollDice() {
         return (int)(Math.random()*10);
     }// End of rollDice()
-
-    private char checkForcedActionSix(char color) {
+    
+    private int[] checkForcedAction(char color) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    private int[] checkForcedActionSix(char color) {
+        //--- local Variables---------------------------
+        int[] meeplePosition={99,99,99,99},returnPositions={99,99,99,99};
+        int counter, returnCounter=0, setPosition=0,startPosition=16;
+        //----------------------------------------------
+        switch (color){
+            case 'r':
+                setPosition = 0;
+                startPosition = 16;
+                break;
+            case 'g':
+                setPosition = 4;
+                startPosition = 26;
+                break;
+            case 'b':
+                setPosition = 8;
+                startPosition = 36;
+                break;
+            case 'y':
+                setPosition = 12;
+                startPosition = 46;
+                break;
+            default:
+                //Ikmprove Error handeling
+                break;
+        }
+
+        meeplePosition = gameBoard.checkMeeple(color);
+        for (counter =0; counter < 4; counter++)
+        {
+            if ((meeplePosition[counter] >= setPosition)&&(meeplePosition[counter] <= (setPosition+3))){
+                returnPositions[returnCounter] = meeplePosition[counter];
+                returnCounter++;
+            }
+        }
+        if (returnPositions [0]!= 99){
+            for (counter =0; counter < 4; counter++){
+                if (meeplePosition[counter]==startPosition){
+                    returnPositions[0]=returnPositions[1]=returnPositions[2]=returnPositions[3]=99;
+                }
+            }
+        }
+        else{
+            for (counter =0; counter < 4; counter++){
+                returnPositions[counter]=meeplePosition[counter];
+            }
+        }
+        return returnPositions;
+    }
+
     public int[] checkPossibleMoves(int diceCount,int playerCounter) {
+        //--- local variables ------------------------------------------
         int[] output={1,2,3};
-//    checkForcedAction();
-        return output;
+        char color='r';
+        //--------------------------------------------------------------
+        switch (playerCounter){
+            case 0:
+                color ='r';
+                break;
+            case 1:
+                color ='g';
+                break;
+            case 2:
+                color ='b';
+                break;
+            case 3:
+                color ='y';
+                break;
+            default:
+                //implement Error handeling
+                break;
+        }
+        if (diceCount ==6)
+            return checkForcedActionSix(color);
+        else
+            return checkForcedAction(color);
+        
     }//End of checkPossibleMoves()
 
     Rules() {
@@ -77,9 +147,16 @@ public class Rules {
                     break;
             }    
         }
-        gameBoard = new GameBoard(playerCount);
+        EventQueue.invokeLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        gameBoard = new GameBoard(playerCount);
+                        gameBoard.setVisible(true);
+                    }
+                });
         loopGame();
     }//End of function initGame()
+    
     private void turn(){
     
     }//End of function turn()
@@ -92,8 +169,12 @@ public class Rules {
             //System.out.println("Player " + (counter+1) + " heißt " + PlayerList.get(counter).getName());
             PlayerList.get(counter).startTurn();
             diceCount=rollDice();
-            //choosedPosition = PlayerList.get(counter).chooseField(checkPossibleMoves(diceCount,counter));
-            //gameBoard.moveMeeple(choosedPosition, (choosedPosition + diceCount));
+            choosedPosition = PlayerList.get(counter).chooseField(checkPossibleMoves(diceCount,counter));
+            gameBoard.moveMeeple(choosedPosition, (choosedPosition + diceCount));
+            
+            //Hier check win conditions?
+           
+            
             counter++;
         }while(counter < PlayerList.size());
     }// End of function loopGame()
