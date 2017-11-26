@@ -16,11 +16,14 @@ public class MenschAergereDichNicht {
      */
     public static void main(String[] args) 
     {
-        Figur FigurRot = new Figur(1, 1, 40);
+       /* Figur FigurRot = new Figur(1, 1, 40);
         FigurRot.Beweglichkeit = true;
         FigurRot.PositionSetzen(4);
-        System.out.println("Die Figur steht auf Position: " +FigurRot.PositionLesen() ); 
+        System.out.println("Die Figur steht auf Position: " +FigurRot.PositionLesen() );*/ 
 // TODO code application logic here
+        Mensch mensch = new Mensch("Svenja", 3);
+        mensch.FigurAuswaehlen();
+
     }
     
 }
