@@ -61,4 +61,13 @@ private static final boolean DEBUG_MODE = true;
         return this.name;
         // TODO Error Handling
     }
+    
+    /**
+     * Returns the color of <code>Player</code>
+     * @return 
+     * Returns the color of the <code>Player</code> as <code>char</code>
+     */
+    public char getColor(){
+        return this.color;
+    }
 }
