@@ -57,6 +57,90 @@ public class GameBoard extends JFrame{
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
     }
+        
+    /**
+     * Returns the first position of the out area for the specified class.
+     * @param color has to match one of the players colors.
+     * Possible colors are <code>r, g, b, y</code>
+     * @return returns the first position of the out area as <code>int</code> value.
+     * Returns <code>-1</code> if the specified color does not exist.
+     */
+    public int getOutPosition(char color){
+        int position;
+        switch(color){
+            case 'r':
+                position = 0;
+                break;
+            case 'g':
+                position = 4;
+                break;
+            case 'b':
+                position = 8;
+                break;
+            case 'y':
+                position = 12;
+                break;
+            default:
+                position = -1;
+        }
+        return position;
+    }
+    
+    /**
+     * Returns the first position of the home area for the specified class.
+     * @param color has to match one of the players colors.
+     * Possible colors are <code>r, g, b, y</code>
+     * @return returns the first position of the home area as <code>int</code> value.
+     * Returns <code>-1</code> if the specified color does not exist.
+     */
+    public int getHomePosition(char color){
+        int position;
+        switch(color){
+            case 'r':
+                position = 47;
+                break;
+            case 'g':
+                position = 51;
+                break;
+            case 'b':
+                position = 55;
+                break;
+            case 'y':
+                position = 59;
+                break;
+            default:
+                position = -1;
+        }
+        return position;
+    }
+    
+    /**
+     * Returns the start position for the specified class.
+     * @param color has to match one of the players colors.
+     * Possible colors are <code>r, g, b, y</code>
+     * @return returns start position as <code>int</code> value.
+     * Returns <code>-1</code> if the specified color does not exist.
+     */
+    public int getStartPosition(char color){
+        int position;
+        switch(color){
+            case 'r':
+                position = 16;
+                break;
+            case 'g':
+                position = 26;
+                break;
+            case 'b':
+                position = 46;
+                break;
+            case 'y':
+                position = 36;
+                break;
+            default:
+                position = -1;
+        }
+        return position;
+    }
     
     /**
      * 
