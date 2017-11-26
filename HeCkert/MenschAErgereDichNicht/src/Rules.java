@@ -36,7 +36,9 @@ public class Rules {
     }
 
     public int[] checkPossibleMoves(int diceCount,int playerCounter) {
-        checkForcedAction();
+        int[] output={1,2,3};
+//    checkForcedAction();
+        return output;
     }//End of checkPossibleMoves()
 
     Rules() {
@@ -90,8 +92,8 @@ public class Rules {
             //System.out.println("Player " + (counter+1) + " heißt " + PlayerList.get(counter).getName());
             PlayerList.get(counter).startTurn();
             diceCount=rollDice();
-            choosedPosition = PlayerList.get(counter).chooseField(checkPossibleMoves(diceCount,counter));
-            gameBoard.moveMeeple(choosedPosition, (choosedPosition + diceCount));
+            //choosedPosition = PlayerList.get(counter).chooseField(checkPossibleMoves(diceCount,counter));
+            //gameBoard.moveMeeple(choosedPosition, (choosedPosition + diceCount));
             counter++;
         }while(counter < PlayerList.size());
     }// End of function loopGame()
