@@ -7,7 +7,7 @@ public class Computer extends Spieler {
     }
 
     @Override  int FigurAuswaehlen() {
-        // Hier Random-Funktion einbauen
+        // Keine Random-Funktion --> Computer muss "gewissenhaft" aussuchen
         // System.out.print("Bitte waehlen Sie die Nummer der Figur aus, die Sie bewegen möchten:");
         
          // Console.ReadLine()

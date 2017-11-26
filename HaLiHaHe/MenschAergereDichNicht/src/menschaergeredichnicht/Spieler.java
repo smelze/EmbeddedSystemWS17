@@ -53,10 +53,11 @@ public abstract class Spieler {
             break;
         };
          
-        for (int i=1; i<=4; i++)
+        for (int i=0; i<4; i++)
         {
-            Figuren[i] = new Figur(i, PositionStarthaus, 40); // Position Starthaus muss überarbeitet werden, da die Figur nun direkt auf dem Feld sitzt
-        };
+            Figur figur = new Figur(i+1, PositionStarthaus, 40); 
+            Figuren[i] = figur; // Position Starthaus muss überarbeitet werden, da die Figur nun direkt auf dem Feld sitzt
+        }
     
     }
 
