@@ -28,6 +28,11 @@ public class Rules {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 */
+    private int[] checkOut(char color){
+        int[] blocked={0,0,0,0};
+        return blocked;
+    }
+    
     public int rollDice() {
         return (int)(Math.random()*10);
     }// End of rollDice()
@@ -35,12 +40,13 @@ public class Rules {
     private int[] checkForcedAction(char color, int diceCount) {
         //--- local Variables-----------------------------------------------
         int[] meeplePosition, returnPositions={99,99,99,99}, enemyPosition,allEnemyPositions;
-        int counter, counter2,returnCounter=0;
+        int counter, counterEnemy,returnCounter=0,counterPlayer=0,targetPosition=0;
         //------------------------------------------------------------------
         meeplePosition = gameBoard.checkMeeple(color);
         allEnemyPositions = new int[12];
         switch(color){
             case 'r':
+                counterPlayer=0;
                 enemyPosition = gameBoard.checkMeeple('g');
                 for (counter=0;counter<4;counter++){
                     allEnemyPositions[counter]=enemyPosition[counter];
@@ -55,6 +61,7 @@ public class Rules {
                 }
                 break;
             case 'g':
+                counterPlayer=1;
                 enemyPosition = gameBoard.checkMeeple('r');
                 for (counter=0;counter<4;counter++){
                     allEnemyPositions[counter]=enemyPosition[counter];
@@ -69,6 +76,7 @@ public class Rules {
                 }
                 break;
             case 'b':
+                counterPlayer=2;
                 enemyPosition = gameBoard.checkMeeple('g');
                 for (counter=0;counter<4;counter++){
                     allEnemyPositions[counter]=enemyPosition[counter];
@@ -83,6 +91,7 @@ public class Rules {
                 }
                 break;
             case 'y':
+                counterPlayer=3;
                 enemyPosition = gameBoard.checkMeeple('g');
                 for (counter=0;counter<4;counter++){
                     allEnemyPositions[counter]=enemyPosition[counter];
@@ -100,13 +109,28 @@ public class Rules {
                 //add error handling
                 break;
         }
+
         
         for (counter=0;counter<4;counter++)
-            for (counter2=0;counter2<12;counter2++)
-                if((meeplePosition[counter]+diceCount)==allEnemyPositions[counter2]){
+            //Überschlag abfangen
+            if((meeplePosition[counter]+diceCount)>55){
+                //HomeBereich
+                if((meeplePosition[counter]+diceCount)<=59){
+                    targetPosition=meeplePosition[counter]+diceCount+(counterPlayer*4);
+                }
+                //Überschlag
+                else
+                    targetPosition=meeplePosition[counter]+diceCount-39;
+            }
+            //Kein Überschlag
+            else{
+                targetPosition=meeplePosition[counter]+diceCount;
+            }
+            for (counterEnemy=0;counterEnemy<12;counterEnemy++)
+                if(targetPosition == allEnemyPositions[counterEnemy]){
                     returnPositions[returnCounter] = meeplePosition[counter];
                     returnCounter++;
-                    counter2=12;
+                    counterEnemy=12;
                 }
         
         
@@ -116,7 +140,7 @@ public class Rules {
     private int[] checkForcedActionSix(char color) {
         //--- local Variables---------------------------
         int[] meeplePosition,returnPositions={99,99,99,99};
-        int counter, returnCounter=0, outPosition,startPosition;
+        int counter,counterTargetPosition, returnCounter=0, outPosition,startPosition;
         //----------------------------------------------
         
         outPosition = gameBoard.getOutPosition(color);
@@ -125,12 +149,30 @@ public class Rules {
         
         //Abfrage Meeple auf Startposition
         for (counter =0; counter < 4; counter++){
-                if (meeplePosition[counter]==startPosition){
-                    returnPositions[0]=meeplePosition[counter];
-                    counter=4;
+            if (meeplePosition[counter]==startPosition){
+                returnPositions[0]=meeplePosition[counter];
+                counter=4;
+                //Abfrage ob eigener Meeple 6 vor StartPosition
+                for(counterTargetPosition=0;counterTargetPosition<4;counterTargetPosition++){
+                    if (meeplePosition[counterTargetPosition]==(startPosition+6)){
+                        returnPositions[0]=meeplePosition[counterTargetPosition];
+                        //Abfrage ob Meeple 12 vor Startposition 
+                        for(counterTargetPosition=0;counterTargetPosition<4;counterTargetPosition++){
+                            if (meeplePosition[counterTargetPosition]==(startPosition+12)){
+                                returnPositions[0]=meeplePosition[counterTargetPosition];
+                                //Abfrage ob Meeple 18 vor Startposition 
+                                for(counterTargetPosition=0;counterTargetPosition<4;counterTargetPosition++){
+                                    if (meeplePosition[counterTargetPosition]==(startPosition+18)){
+                                        returnPositions[0]=meeplePosition[counterTargetPosition];
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
+            }
         }
-        //Wenn keiner Auf Startposition ..Abfrage Meeple Out?
+        //Wenn keiner Auf Startposition ..Abfrage Meeple im Out?
         if (returnPositions [0] == 99)
             for (counter =0; counter < 4; counter++)
             {
@@ -139,15 +181,7 @@ public class Rules {
                     returnCounter++;
                 }
             }
-        /*In checkPossibleMoves ausgelagert
-        //Wenn keiner auf Star oder im Out, dann freie Wahl
-        if (returnPositions [0]== 99)
-            for (counter =0; counter < 4; counter++){
-                returnPositions[counter]=meeplePosition[counter];
-            }
-        */
-        
-        return returnPositions;
+       return returnPositions;
     }
 
     public int[] checkPossibleMoves(int diceCount,int playerCounter) {
@@ -173,6 +207,22 @@ public class Rules {
                 possibleMoves[counter]=meeplePositions[counter];
             }                    
         }
+        /*
+        for (counter = 0;counter<4;counter++){
+            if((possibleMoves[counter]+diceCount)>55){
+                if((choosedPosition+diceCount)<=59){
+                    targetPosition=choosedPosition+diceCount+(counterPlayer*4);
+                }
+                else
+                    targetPosition=choosedPosition+diceCount-39;//falsch
+            }
+            else{
+                targetPosition=choosedPosition+diceCount;
+            }
+        }
+        */
+        
+        
         /*Array verkürzen ...erstmal unwichtig ...vllt kontraproduktiv
         for(counter=1;counter<4;counter++)
             if (possibleMoves[counter]==99){
@@ -231,25 +281,52 @@ public class Rules {
  
     public void loopGame(){
         //--- local variables -----------
-        int counter=0, diceCount, choosedPosition;
+        int counterPlayer=0, counterColor, counterMeeple,counterMeeple2, diceCount, choosedPosition,free=0,targetPosition;
+        int[] meeplePositions;
+        char color;
         boolean win=false;
         //-------------------------------
         do{
             do{
-                //System.out.println("Player " + (counter+1) + " heißt " + PlayerList.get(counter).getName());
-                PlayerList.get(counter).startTurn();
+                PlayerList.get(counterPlayer).startTurn();
                 diceCount=rollDice();
-                choosedPosition = PlayerList.get(counter).chooseField(checkPossibleMoves(diceCount,counter));
-                gameBoard.moveMeeple(choosedPosition,(choosedPosition + diceCount));
+                choosedPosition = PlayerList.get(counterPlayer).chooseField(checkPossibleMoves(diceCount,counterPlayer));
+                if((choosedPosition+diceCount)>55){
+                    if((choosedPosition+diceCount)<=59){
+                        targetPosition=choosedPosition+diceCount+(counterPlayer*4);
+                    }
+                    else
+                        targetPosition=choosedPosition+diceCount-39;//falsch
+                }
+                else{
+                    targetPosition=choosedPosition+diceCount;
+                }
+                for(counterColor=0;counterColor<4;counterColor++){
+                    meeplePositions=gameBoard.checkMeeple(PlayerList.get(counterColor).getColor());
+                    free=0+counterColor*4;
+                    for(counterMeeple=0;counterMeeple<4;counterMeeple++){
+                        if (meeplePositions[counterMeeple]==targetPosition){
+                            for(counterMeeple2=0;counterMeeple2<4;counterMeeple2++){
+                                if(meeplePositions[counterMeeple2]==free){
+                                    free++;
+                                    counterMeeple2=0;
+                                }
+                            }
+                            gameBoard.moveMeeple(meeplePositions[counterMeeple], free);
+                            counterMeeple=4;
+                        }
+                    }
+                }
+                gameBoard.moveMeeple(choosedPosition,(targetPosition));
 
                 //Hier check win conditions?
 
 
-                counter++;
-            }while(counter < PlayerList.size());
-            counter =0;
+                counterPlayer++;
+            }while(counterPlayer < PlayerList.size());
+            counterPlayer =0;
         }while(!win);
-        System.out.println("Herzlichen Glückwunsch "+PlayerList.get(counter).getName()+" Sie haben gewonnen");
+        System.out.println("Herzlichen Glückwunsch "+PlayerList.get(counterPlayer).getName()+" Sie haben gewonnen");
     }// End of function loopGame()
 }
 
