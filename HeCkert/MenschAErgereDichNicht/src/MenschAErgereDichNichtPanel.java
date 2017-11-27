@@ -73,7 +73,7 @@ public class MenschAErgereDichNichtPanel extends JPanel {
                 break;                
         }
         Circle.fillArc(xpos, ypos, 15, 15, 0, 360);
-        clear(xpos, ypos);
+        //clear(xpos, ypos);
     }
     
     private void clear(int xpos, int ypos){
