@@ -16,7 +16,8 @@ public class Rules {
     }//End of Rules() constructor    
 
     private int rollDice() {
-        return (int)(Math.random()*10);
+        return 6;
+        //return (int)(Math.random()*10);
     }// End of rollDice()
     
     private int[] checkForcedAction(char color, int diceCount) {
@@ -248,13 +249,13 @@ public class Rules {
                     break;
             }    
         }
-        EventQueue.invokeLater(new Runnable() {
-                    @Override
-                    public void run() {
+        //EventQueue.invokeLater(new Runnable() {
+                  //  @Override
+                    //public void run() {
                         gameBoard = new GameBoard(playerCount);
                         gameBoard.setVisible(true);
-                    }
-                });
+                   // }
+                //});
         loopGame();
     }//End of function initGame()
  
@@ -280,6 +281,7 @@ public class Rules {
                 else{
                     targetPosition=choosedPosition+diceCount;
                 }
+                //kommentar!!!
                 for(counterColor=0;counterColor<4;counterColor++){
                     meeplePositions=gameBoard.checkMeeple(PlayerList.get(counterColor).getColor());
                     free=0+counterColor*4;
@@ -300,7 +302,7 @@ public class Rules {
 
                 meeplePositions=gameBoard.checkMeeple(PlayerList.get(counterColor).getColor());
                 //Hier winCheck
-
+                //Haus verlassen verbieten
                 counterPlayer++;
             }while(counterPlayer < PlayerList.size());
             counterPlayer =0;
