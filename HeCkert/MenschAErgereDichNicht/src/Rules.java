@@ -299,15 +299,28 @@ public class Rules {
                     }
                 }
                 gameBoard.moveMeeple(choosedPosition,(targetPosition));
-
-                meeplePositions=gameBoard.checkMeeple(PlayerList.get(counterColor).getColor());
-                //Hier winCheck
-                //Haus verlassen verbieten
+                win=checkWin(counterPlayer);
                 counterPlayer++;
             }while(counterPlayer < PlayerList.size());
             counterPlayer =0;
         }while(!win);
         System.out.println("Herzlichen Glückwunsch "+PlayerList.get(counterPlayer).getName()+" Sie haben gewonnen");
     }// End of function loopGame()
+    
+private boolean checkWin(int counterPlayer){
+    //--- local variables ---------------------------------
+    int[] meeplePositions;
+    int counterMeeple,home;
+    //-----------------------------------------------------
+    meeplePositions =gameBoard.checkMeeple(PlayerList.get(counterPlayer).getColor());
+    home=56+(counterPlayer*4);
+    for(counterMeeple=0;counterMeeple<4;counterMeeple++){
+        if(meeplePositions[counterMeeple]==home){
+            home++;
+            counterPlayer=0;
+        }
+    }
+        return (home==(56+(counterPlayer*4)+4));
+}//End of function win
 }
 
