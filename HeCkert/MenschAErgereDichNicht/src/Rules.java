@@ -14,26 +14,8 @@ public class Rules {
 //--- functions -------------------------------------------------------------
     Rules() {
     }//End of Rules() constructor    
-    
-/* momentan nicht benötigt   
-    private boolean checkFieldStart() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
-    private boolean checkFieldEnd() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    private char checkBase(char color) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-*/
-    private int[] checkOut(char color){
-        int[] blocked={0,0,0,0};
-        return blocked;
-    }
-    
-    public int rollDice() {
+    private int rollDice() {
         return (int)(Math.random()*10);
     }// End of rollDice()
     
@@ -184,10 +166,11 @@ public class Rules {
        return returnPositions;
     }
 
-    public int[] checkPossibleMoves(int diceCount,int playerCounter) {
+    private int[] checkPossibleMoves(int diceCount,int playerCounter) {
         //--- local variables ------------------------------------------
         int[] possibleMoves, meeplePositions,returnPositions;
-        int counter,counter2;
+        int counter,counterCheck,counterPossible=0,targetPosition;
+        boolean selbstSchlagen;
         char color;
         //--------------------------------------------------------------
         
@@ -204,33 +187,29 @@ public class Rules {
         //Possible Actions if no Forced Actions
         if (possibleMoves[0]==99){
             for (counter = 0;counter<4;counter++){
-                possibleMoves[counter]=meeplePositions[counter];
+                //Check ob selbst schlagen
+                selbstSchlagen=false;
+                for (counterCheck=0;counterCheck<4;counterCheck++){
+                    if((meeplePositions[counter]+diceCount)>55){
+                        if((meeplePositions[counter]+diceCount)<=59){
+                            targetPosition=meeplePositions[counter]+diceCount+(playerCounter*4);
+                        }
+                        else
+                            targetPosition=meeplePositions[counter]+diceCount-39;
+                    }
+                    else{
+                        targetPosition=meeplePositions[counter]+diceCount;
+                    }
+                    if ((targetPosition)==meeplePositions[counterCheck]){
+                        selbstSchlagen=true;
+                    }
+                }
+                if(!selbstSchlagen){
+                    possibleMoves[counterPossible]=meeplePositions[counter];
+                    counterPossible++;
+                }                    
             }                    
         }
-        /*
-        for (counter = 0;counter<4;counter++){
-            if((possibleMoves[counter]+diceCount)>55){
-                if((choosedPosition+diceCount)<=59){
-                    targetPosition=choosedPosition+diceCount+(counterPlayer*4);
-                }
-                else
-                    targetPosition=choosedPosition+diceCount-39;//falsch
-            }
-            else{
-                targetPosition=choosedPosition+diceCount;
-            }
-        }
-        */
-        
-        
-        /*Array verkürzen ...erstmal unwichtig ...vllt kontraproduktiv
-        for(counter=1;counter<4;counter++)
-            if (possibleMoves[counter]==99){
-                returnPositions= new int[counter+1];
-                for(counter2=0;counter<=counter;counter++)
-            }
-        */        
-        //Selbst schlagen muss noch abgefangen werden
         return possibleMoves;
     }//End of checkPossibleMoves()
 
@@ -279,9 +258,9 @@ public class Rules {
         loopGame();
     }//End of function initGame()
  
-    public void loopGame(){
+    private void loopGame(){
         //--- local variables -----------
-        int counterPlayer=0, counterColor, counterMeeple,counterMeeple2, diceCount, choosedPosition,free=0,targetPosition;
+        int counterPlayer=0, counterColor, counterMeeple,counterMeeple2, diceCount, choosedPosition,free,targetPosition;
         int[] meeplePositions;
         char color;
         boolean win=false;
@@ -319,8 +298,8 @@ public class Rules {
                 }
                 gameBoard.moveMeeple(choosedPosition,(targetPosition));
 
-                //Hier check win conditions?
-
+                meeplePositions=gameBoard.checkMeeple(PlayerList.get(counterColor).getColor());
+                //Hier winCheck
 
                 counterPlayer++;
             }while(counterPlayer < PlayerList.size());
