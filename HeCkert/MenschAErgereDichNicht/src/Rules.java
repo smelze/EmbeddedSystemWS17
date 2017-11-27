@@ -322,5 +322,13 @@ private boolean checkWin(int counterPlayer){
     }
         return (home==(56+(counterPlayer*4)+4));
 }//End of function win
+
+private int checkNewRoundOrHouse(int startPosition,int diceCount, int counterPlayer){
+    // --- local variables----------------------------
+    int tergetPosition=0;
+    // -----------------------------------------------
+    return tergetPosition;
+}//check newRoundOrHouse
+
 }
 
