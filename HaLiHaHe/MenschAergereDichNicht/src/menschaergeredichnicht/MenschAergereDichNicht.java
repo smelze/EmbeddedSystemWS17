@@ -22,6 +22,7 @@ public class MenschAergereDichNicht {
         System.out.println("Die Figur steht auf Position: " +FigurRot.PositionLesen() );*/ 
 // TODO code application logic here
         Mensch mensch = new Mensch("Svenja", 3);
+        Mensch mensch2 = new Mensch("Kai", 4);
         mensch.FigurAuswaehlen();
 
     }
