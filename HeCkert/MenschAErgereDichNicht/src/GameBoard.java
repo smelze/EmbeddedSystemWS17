@@ -35,13 +35,12 @@ public class GameBoard extends JFrame{
             
             MeepleList = new ArrayList<>();
             MeepleIterator = MeepleList.listIterator(0);
-            
-            char color = 'y';
-            
+            char color;            
             for(int i=0; i<(4*playerCount); i++){
                 if(i<=3) color = 'r';
                 else if(i<=7) color = 'g';
                 else if (i<=11) color = 'b';
+                else color= 'y';
                 MeepleList.add(new Meeple(color,i));
             }
         }
@@ -151,12 +150,12 @@ public class GameBoard extends JFrame{
     public void moveMeeple(int startposition, int newPosition) {
         MeepleIterator = MeepleList.listIterator(0);
         while(MeepleIterator.hasNext()){
-            Meeple m = MeepleIterator.next();
+            Meeple m = MeepleIterator.next();                
             if(m.getPosition() == startposition ){
                 m.setPosition(newPosition);
                 Panel.drawMeepleByColor(m.getColor(),newPosition);
             }            
-        }
+        }        
     }
 
     /**
