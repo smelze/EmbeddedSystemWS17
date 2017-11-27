@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class Verwaltung {
-
 	int anzahlSpieler;
 	boolean spielBeendet;
 	int anDerReihe;
@@ -10,18 +9,48 @@ public class Verwaltung {
 	// boolean Regeln;
 	
 	public Verwaltung(int anzahlSpieler) {
-		
 		spielerArray = new Spieler[anzahlSpieler];
+		boolean farbeDoppelt = false;
+		int abbruchWhile = 0;
 
 		for(int i=0;i<anzahlSpieler;i++){
 			System.out.println("Geben Sie den Namen des Spielers ein.");
 			String name = sc.nextLine();
 			System.out.println("Geben Sie die Farbe des Spielers ein.");
 			String farbe = sc.nextLine();
-			spielerArray[i] = new Spieler(name,farbe);
-			//Überprüfen ob Name und Farbe bereits vorhanden!!
-		}
 		
+			if(i > 0) {
+				for(int j=0;j<i;j++) {
+					if(farbe.equals(spielerArray[j].spielerDetailsAnzeigen()[1])) {
+						System.out.println("Fehlerhafte Eingabe! Farbe ist doppelt.");
+						farbeDoppelt = true;
+					}
+				}
+			}
+			
+			if(!farbeDoppelt) {
+				spielerArray[i] = new Spieler(name,farbe);
+				farbeDoppelt = false;
+			}else {
+				while(farbeDoppelt) {
+					System.out.println("Farbe erneut eingeben.");
+					farbe = sc.nextLine();
+					abbruchWhile = 0;
+					for(int j=0;j<i;j++) {
+						if(farbe.equals(spielerArray[j].spielerDetailsAnzeigen()[1])) {
+							System.out.println("Fehlerhafte Eingabe! Farbe ist doppelt.");
+						}else {
+							abbruchWhile++;
+						}
+					}
+					if(abbruchWhile == i) {
+						farbeDoppelt = false;
+						abbruchWhile = 0;
+						spielerArray[i] = new Spieler(name,farbe);
+					}
+				}
+			}
+		}
 	}
 
 	public static void main(String[] args) {
@@ -48,6 +77,7 @@ public class Verwaltung {
 			details = spielerArray[i].spielerDetailsAnzeigen();
 			System.out.println("Spieler"+(i+1)+": "+details[0]+", Farbe: "+details[1]);
 		}
+		System.out.println(" ");
 		
 		int zahl = 0;
 		//while(spielBeendet) {
@@ -62,9 +92,4 @@ public class Verwaltung {
 				
 			}
 	}
-	
-	/*public int bestimmeNaechstenSpieler(int anzahlspieler) {
-		
-		return ;
-	}*/
 }
