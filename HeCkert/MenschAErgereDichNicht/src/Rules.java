@@ -1,5 +1,5 @@
 //--- imports ----------------------------------------------------------------
-import java.awt.EventQueue;
+//import java.awt.EventQueue;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -39,10 +39,10 @@ private int rollDice() {
  */
 private int[] checkForcedAction(char color, int diceCount) {
     //--- local Variables-----------------------------------------------
-    int[] meeplePosition, returnPositions={99,99,99,99}, enemyPosition,allEnemyPositions;
+    int[] meeplePositions, returnPositions={99,99,99,99}, enemyPosition,allEnemyPositions;
     int counter, counterEnemy,returnCounter=0,counterPlayer=0,targetPosition=0;
     //------------------------------------------------------------------
-    meeplePosition = gameBoard.checkMeeple(color);
+    meeplePositions = gameBoard.checkMeeple(color);
     allEnemyPositions = new int[12];
     switch(color){
         case 'r':
@@ -113,22 +113,22 @@ private int[] checkForcedAction(char color, int diceCount) {
 
     for (counter=0;counter<4;counter++)
         //Überschlag abfangen
-        if((meeplePosition[counter]+diceCount)>55){
+        if((meeplePositions[counter]+diceCount)>55){
             //HomeBereich
-            if((meeplePosition[counter]+diceCount)<=59){
-                targetPosition=meeplePosition[counter]+diceCount+(counterPlayer*4);
+            if((meeplePositions[counter]+diceCount)<=59){
+                targetPosition=meeplePositions[counter]+diceCount+(counterPlayer*4);
             }
             //Überschlag
             else
-                targetPosition=meeplePosition[counter]+diceCount-39;
+                targetPosition=meeplePositions[counter]+diceCount-39;
         }
         //Kein Überschlag
         else{
-            targetPosition=meeplePosition[counter]+diceCount;
+            targetPosition=meeplePositions[counter]+diceCount;
         }
         for (counterEnemy=0;counterEnemy<12;counterEnemy++)
             if(targetPosition == allEnemyPositions[counterEnemy]){
-                returnPositions[returnCounter] = meeplePosition[counter];
+                returnPositions[returnCounter] = meeplePositions[counter];
                 returnCounter++;
                 counterEnemy=12;
             }
@@ -364,18 +364,54 @@ private boolean checkWin(int counterPlayer){
 }//End of function win
 
 /**
- * function checks if a Meeple is set into a new Round, the house or the normal corse and returns the correct number of the target Position
+ * produces a targetPosition ...checks if a Meeple is set into a new Round, the house or the normal corse and returns the correct number of the target Position
  * @param startPosition 
  * @param diceCount
  * @param counterPlayer Number of the active Pkayer within the ArrayList PlayerList
  * @return targetPosition 
  */
-private int checkNewRoundOrHouse(int startPosition,int diceCount, int counterPlayer){
+private int getTargetPosition(int meeplePosition,int diceCount, int counterPlayer){
     // --- local variables----------------------------
-    int tergetPosition=0;
+    int targetPosition,startPosition,homePosition,roundEnd;
     // -----------------------------------------------
-    return tergetPosition;
-}//End of check newRoundOrHouse
+    startPosition=gameBoard.getStartPosition(PlayerList.get(counterPlayer).getColor());
+    homePosition=gameBoard.getHomePosition(PlayerList.get(counterPlayer).getColor());
+    roundEnd=gameBoard.getStartPosition(PlayerList.get(0).getColor())+39;
+    
+    //Abfrage ob im Haus
+    if(((meeplePosition)>=homePosition)&&(meeplePosition<(homePosition+4))){
+        if((meeplePosition+diceCount)<(homePosition+4))
+            targetPosition=meeplePosition+diceCount;
+        else{
+            System.out.println("Error: Zug geht über den Home Bereich hinaus");
+            targetPosition=meeplePosition;//Bleibt auf Position ...doof...in übergeordnetem anders abfangen?
+        }
+    }
+    else{    
+        if(counterPlayer==0){
+            if ((meeplePosition+diceCount)>(startPosition+39)){//Ziel Entweder in neuer Runde oder im Haus
+                if((meeplePosition+diceCount)<=(roundEnd+4))//Ziel im Haus
+                    targetPosition=meeplePosition+diceCount;
+                else
+                    targetPosition=meeplePosition+diceCount-40;//Ziel neue Runde
+            }
+            else
+                targetPosition=meeplePosition+diceCount;//gleiche Runde einfach weiter    
+        }    
+        else{
+            if((meeplePosition<startPosition)&&(meeplePosition+diceCount)>startPosition){//Vor dem Haus + Eingang möglich
+                targetPosition=meeplePosition+diceCount;
+            }
+            else{
+                if((meeplePosition+diceCount)>roundEnd)//neue Runde
+                    targetPosition=meeplePosition+diceCount-40;
+                else
+                    targetPosition=meeplePosition+diceCount; 
+            }
+        }
+    }
+    return targetPosition;
+}//End of getTargetPosition()
 
 }
 
