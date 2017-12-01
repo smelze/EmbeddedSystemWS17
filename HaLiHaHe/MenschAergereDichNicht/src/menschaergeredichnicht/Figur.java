@@ -13,11 +13,11 @@ public class Figur {
     public Figur(int nummer, int startPosition, int anzahlPositionen)
     {
         Nummer = nummer;
-        Position = startPosition;
+        //Position = startPosition;
         AnzahlPositionen = anzahlPositionen;
     }
-
-    public void PositionSetzen(int wuerfelZahl) {
+    
+    public void PositionBewegen(int wuerfelZahl) {
         if (Beweglichkeit)
         {
             Position = Position + wuerfelZahl;
@@ -32,7 +32,10 @@ public class Figur {
             System.out.println("Die Figur "+ Nummer +"kann nicht um" + wuerfelZahl+" bewegt werden");
         }
     }
-
+    public void FigurSetzen(int neuePosition)
+    {
+        Position = neuePosition;
+    }
     public int PositionLesen() {
         return Position;
     }
