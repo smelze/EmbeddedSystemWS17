@@ -6,7 +6,7 @@ public class Figur {
 
     private int Position;
     
-    private int AnzahlPositionen; 
+    private int AnzahlPositionen;  //Anzahl der Felder auf Spielfeld, bei 4 Spielern=40 Felder
 
     public boolean Beweglichkeit;
     

@@ -4,9 +4,9 @@ public abstract class Spieler {
 
     public String Name;
 
-    public int[] StartHaus;
+    public int[] StartHaus = new int [4];
 
-    public int[] ZielHaus;
+    public int[] ZielHaus = new int [4];
 
     public int PositionZielhaus;
 
