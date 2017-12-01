@@ -23,10 +23,17 @@ public class Figur {
     public void PositionBewegen(int wuerfelZahl) {
         if (Beweglichkeit)
         {
-            if ( (Position >= (PositionZielhaus - 5)) && (Position + wuerfelZahl >= PositionZielhaus))  //Abfrage, ob Figur mit Würfel-Ergebnis ins Zielhaus kommen könnte
+            if ( (Position >= (PositionZielhaus - 5)) && (Position + wuerfelZahl >= PositionZielhaus) && (Position + wuerfelZahl - PositionZielhaus <=4) )  //Abfrage, ob Figur mit Würfel-Ergebnis ins Zielhaus kommen könnte
             {
-                //Hier Status der Figur zur "IM ZIELHAUS" einfügen
-                Position = Position + wuerfelZahl - PositionZielhaus;
+                if (//überprüfung, ob die Position im Haus noch frei ist)
+                    {
+                    //Hier Status der Figur zu "IM ZIELHAUS" einfügen
+                    Position = Position + wuerfelZahl - PositionZielhaus;
+                    }
+                else 
+                {
+                System.out.println("Die Figur "+ Nummer +"kann nicht im Haus bewegt werden, da die Position bereits vergeben ist.");    
+                }
             }
             else 
             {
@@ -41,7 +48,7 @@ public class Figur {
         }
         else
         {
-            System.out.println("Die Figur "+ Nummer +"kann nicht um" + wuerfelZahl+" bewegt werden");
+            System.out.println("Die Figur "+ Nummer +"kann nicht um" + wuerfelZahl+" bewegt werden.");
         }
     }
     public void FigurSetzen(int neuePosition)
