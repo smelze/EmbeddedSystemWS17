@@ -10,7 +10,7 @@ public class Spielbrett {
             // Figur.PositionLesen() ;
         
         }
-
+        // Hallo Markus, hier ist dein Test-Kommentar!
     public void SpielbrettAnzeigen() {
     }
 }
