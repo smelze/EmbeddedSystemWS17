@@ -4,13 +4,13 @@ public abstract class Spieler {
 
     public String Name;
 
-    public int[] StartHaus = new int [4];
+    public int[] StartHaus = new int [4];   //Position IM StartHaus
 
-    public int[] ZielHaus = new int [4];
+    public int[] ZielHaus = new int [4];    //Position IM ZielHaus
 
-    public int PositionZielhaus;
-
-    public int PositionStarthaus;
+    public int PositionZielhaus;            //Position WO das ZielHaus auf dem Spielfeld angesiedelt ist
+   
+    public int PositionStarthaus;           //Position WO das StartHaus auf dem Spielfeld angesiedelt ist
     
     private int SpielerNummer ;
 
@@ -55,7 +55,7 @@ public abstract class Spieler {
          
         for (int i=0; i<4; i++)
         {
-            Figur figur = new Figur(i+1, PositionStarthaus, 40); 
+            Figur figur = new Figur(i+1, PositionStarthaus, 40, PositionZielhaus); 
             Figuren[i] = figur; // Position Starthaus muss überarbeitet werden, da die Figur nun direkt auf dem Feld sitzt
         }
     

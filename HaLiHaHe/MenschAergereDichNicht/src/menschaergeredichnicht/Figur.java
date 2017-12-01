@@ -7,25 +7,37 @@ public class Figur {
     private int Position;
     
     private int AnzahlPositionen;  //Anzahl der Felder auf Spielfeld, bei 4 Spielern=40 Felder
+    
+    private int PositionZielhaus;  //An dieser Position liegt das Zielhaus des Spielers
 
     public boolean Beweglichkeit;
     
-    public Figur(int nummer, int startPosition, int anzahlPositionen)
+    public Figur(int nummer, int startPosition, int anzahlPositionen, int zielPosition)
     {
         Nummer = nummer;
         //Position = startPosition;
         AnzahlPositionen = anzahlPositionen;
+        PositionZielhaus = zielPosition;
     }
     
     public void PositionBewegen(int wuerfelZahl) {
         if (Beweglichkeit)
         {
-            Position = Position + wuerfelZahl;
-            
-            if (Position > AnzahlPositionen)
-            { 
-                Position = Position - AnzahlPositionen; //AnzahlPositionen wäre besser in der Klasse Spielfeld
+            if ( (Position >= (PositionZielhaus - 5)) && (Position + wuerfelZahl >= PositionZielhaus))  //Abfrage, ob Figur mit Würfel-Ergebnis ins Zielhaus kommen könnte
+            {
+                //Hier Status der Figur zur "IM ZIELHAUS" einfügen
+                Position = Position + wuerfelZahl - PositionZielhaus;
             }
+            else 
+            {
+                Position = Position + wuerfelZahl;
+
+                if (Position > AnzahlPositionen)
+                { 
+                    Position = Position - AnzahlPositionen; //AnzahlPositionen wäre besser in der Klasse Spielfeld
+                }
+            }
+            
         }
         else
         {
