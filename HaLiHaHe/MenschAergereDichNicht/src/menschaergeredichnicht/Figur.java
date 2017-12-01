@@ -44,7 +44,7 @@ public class Figur {
         {
             if ( (Position >= (PositionZielhaus - 5)) && (Position + wuerfelZahl >= PositionZielhaus) && (Position + wuerfelZahl - PositionZielhaus <=4) )  //Abfrage, ob Figur mit Würfel-Ergebnis ins Zielhaus kommen könnte
             {
-                 for (int i=0; i<4; i++)
+                 for (int i=0; i<4; i++) //For-Schleife, damit alle Figuren des Spielers durchgeprueft werden
                 {
                     if (Figuren[i].PositionLesen != (Position + wuerfelZahl - PositionZielhaus) && (Figuren[i].StatusLesen != 3) )
                     {
