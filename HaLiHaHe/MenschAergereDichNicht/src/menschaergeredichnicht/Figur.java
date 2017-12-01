@@ -9,6 +9,8 @@ public class Figur {
     private int AnzahlPositionen;  //Anzahl der Felder auf Spielfeld, bei 4 Spielern=40 Felder
     
     private int PositionZielhaus;  //An dieser Position liegt das Zielhaus des Spielers
+    
+    public int status; 
 
     public boolean Beweglichkeit;
     
@@ -28,11 +30,11 @@ public class Figur {
            Beweglichkeit = 0;
         }
     */
-    public enum Status  
+    private enum Status  
     {
-        isStartHaus,
-        isLauffeld,
-        isZielHaus;
+        istStartHaus,
+        istLauffeld,
+        istZielHaus;
     };
             
             
@@ -44,7 +46,7 @@ public class Figur {
             {
                 if (//überprüfung, ob die Position im Haus noch frei ist)
                     {
-                    //Hier Status der Figur zu "IM ZIELHAUS" einfügen
+                    status = Status.istZielHaus;
                     Position = Position + wuerfelZahl - PositionZielhaus;
                     }
                 else 
