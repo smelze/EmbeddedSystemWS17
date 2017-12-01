@@ -13,7 +13,7 @@ public class Spielbrett {
         }
         for(int i = 0; i<16;i++)
         {
-            StartHaeuser[i] = 'X';
+            StartHaeuser[i] = 'x';
             ZielHaeuser[i] = '_';
         }
     }
