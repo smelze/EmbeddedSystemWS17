@@ -21,8 +21,8 @@ public abstract class Spieler {
     {
         Name = name;
         SpielerNummer = spielernummer;
-        int[] StartHaus = {1, 1, 1, 1};
-        int[] ZielHaus = {0, 0, 0, 0};
+        int[] StartHaus = {1, 1, 1, 1};         // 4 Figuren im Starthaus
+        int[] ZielHaus = {0, 0, 0, 0};          // 4 Figuren im Zielhaus
         
         switch(SpielerNummer)
         {
@@ -70,7 +70,12 @@ public abstract class Spieler {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    public void ZugAusfuehren() {
+    public void ZugAusfuehren() 
+    {
+        
+        
+        
+        
     }
    
    

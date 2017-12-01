@@ -10,6 +10,10 @@ public class Figur {
     
     private int PositionZielhaus;  //An dieser Position liegt das Zielhaus des Spielers
     
+    private int istStartHaus = 1;    
+    private int istZielHaus  = 2;    
+    private int istLauffeld  = 3;
+    
     public int status; 
 
     public boolean Beweglichkeit;
@@ -21,33 +25,17 @@ public class Figur {
         AnzahlPositionen = anzahlPositionen;
         PositionZielhaus = zielPosition;
     }
-    
-    /*
-        Aufzählung zum Abgleich des Status einer Figur.
-        Bspw. kann nun abgeglichen werden:
-        If (Figur.Status == isStarthaus)
-        { 
-           Beweglichkeit = 0;
-        }
-    */
-    private enum Status  
-    {
-        istStartHaus,
-        istLauffeld,
-        istZielHaus;
-    };
-            
-            
+               
             
     public void PositionBewegen(int wuerfelZahl) {                
         if (Beweglichkeit)
         {
             if ( (Position >= (PositionZielhaus - 5)) && (Position + wuerfelZahl >= PositionZielhaus) && (Position + wuerfelZahl - PositionZielhaus <=4) )  //Abfrage, ob Figur mit Würfel-Ergebnis ins Zielhaus kommen könnte
             {
-                if (//überprüfung, ob die Position im Haus noch frei ist)
+                if (true/*überprüfung, ob die Position im Haus noch frei ist*/)
                     {
-                    status = Status.istZielHaus;
-                    Position = Position + wuerfelZahl - PositionZielhaus;
+                        status = istZielHaus;
+                        Position = Position + wuerfelZahl - PositionZielhaus;
                     }
                 else 
                 {
@@ -77,6 +65,9 @@ public class Figur {
     public int PositionLesen() {
         return Position;
     }
-
+    
+    public int StatusLesen() {
+        return status;
+    }
   
 }

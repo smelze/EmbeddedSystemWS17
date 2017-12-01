@@ -25,6 +25,18 @@ public class MenschAergereDichNicht {
         //mensch.FigurAuswaehlen();
         Spielbrett Holzi = new Spielbrett();
         Holzi.SpielbrettAnzeigen();
+        
+        Mensch spielerRot   = new Mensch("Rot", 1);
+        Mensch spielerGelb  = new Mensch("Gelb", 2);
+        Mensch spielerGruen = new Mensch("Gruen", 3);
+        Mensch spielerBlau  = new Mensch("Blau", 4);
+        
+        
+        
+        
+        
+        
+        
     }
     
 }
