@@ -10,7 +10,7 @@ public class Spielbrett {
             // Figur.PositionLesen() ;
         
         }
-        // Hallo Markus, hier ist dein Test-Kommentar!
+        // Hallo ihr beiden Voll Coole ICQ Variante hier, hier ist dein Test-Kommentar!
     public void SpielbrettAnzeigen() {
     }
 }
