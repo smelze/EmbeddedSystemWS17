@@ -20,7 +20,24 @@ public class Figur {
         PositionZielhaus = zielPosition;
     }
     
-    public void PositionBewegen(int wuerfelZahl) {
+    /*
+        Aufzählung zum Abgleich des Status einer Figur.
+        Bspw. kann nun abgeglichen werden:
+        If (Figur.Status == isStarthaus)
+        { 
+           Beweglichkeit = 0;
+        }
+    */
+    public enum Status  
+    {
+        isStartHaus,
+        isLauffeld,
+        isZielHaus;
+    };
+            
+            
+            
+    public void PositionBewegen(int wuerfelZahl) {                
         if (Beweglichkeit)
         {
             if ( (Position >= (PositionZielhaus - 5)) && (Position + wuerfelZahl >= PositionZielhaus) && (Position + wuerfelZahl - PositionZielhaus <=4) )  //Abfrage, ob Figur mit Würfel-Ergebnis ins Zielhaus kommen könnte
