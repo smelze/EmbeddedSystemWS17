@@ -38,8 +38,19 @@ public class Figur {
                         Position = Position + wuerfelZahl - PositionZielhaus;
                     }
                 else 
+
+                 for (int i=0; i<4; i++) //For-Schleife, damit alle Figuren des Spielers durchgeprueft werden
+
                 {
-                System.out.println("Die Figur "+ Nummer +"kann nicht im Haus bewegt werden, da die Position bereits vergeben ist.");    
+                    if (Figuren[i].PositionLesen != (Position + wuerfelZahl - PositionZielhaus) && (Figuren[i].StatusLesen != 3) )
+                    {
+                        status = 3;
+                        Position = Position + wuerfelZahl - PositionZielhaus;
+                    }
+                    else
+                    {
+                        System.out.println("Die Figur "+ Nummer +"kann nicht im Haus bewegt werden, da die Position bereits vergeben ist.");
+                    }
                 }
             }
             else 
