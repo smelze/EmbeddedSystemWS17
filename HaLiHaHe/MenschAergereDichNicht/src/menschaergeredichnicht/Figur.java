@@ -44,14 +44,17 @@ public class Figur {
         {
             if ( (Position >= (PositionZielhaus - 5)) && (Position + wuerfelZahl >= PositionZielhaus) && (Position + wuerfelZahl - PositionZielhaus <=4) )  //Abfrage, ob Figur mit Würfel-Ergebnis ins Zielhaus kommen könnte
             {
-                if (//überprüfung, ob die Position im Haus noch frei ist)
-                    {
-                    status = Status.istZielHaus;
-                    Position = Position + wuerfelZahl - PositionZielhaus;
-                    }
-                else 
+                 for (int i=0; i<4; i++)
                 {
-                System.out.println("Die Figur "+ Nummer +"kann nicht im Haus bewegt werden, da die Position bereits vergeben ist.");    
+                    if (Figuren[i].PositionLesen != (Position + wuerfelZahl - PositionZielhaus) && (Figuren[i].StatusLesen != 3) )
+                    {
+                        status = 3;
+                        Position = Position + wuerfelZahl - PositionZielhaus;
+                    }
+                    else
+                    {
+                        System.out.println("Die Figur "+ Nummer +"kann nicht im Haus bewegt werden, da die Position bereits vergeben ist.");
+                    }
                 }
             }
             else 
