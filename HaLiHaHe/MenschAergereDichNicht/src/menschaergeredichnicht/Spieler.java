@@ -21,6 +21,8 @@ public abstract class Spieler {
     {
         Name = name;
         SpielerNummer = spielernummer;
+        int[] StartHaus = {1, 1, 1, 1};
+        int[] ZielHaus = {0, 0, 0, 0};
         
         switch(SpielerNummer)
         {

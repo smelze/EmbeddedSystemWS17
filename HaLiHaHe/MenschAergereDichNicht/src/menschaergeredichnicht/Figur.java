@@ -17,7 +17,24 @@ public class Figur {
         AnzahlPositionen = anzahlPositionen;
     }
     
-    public void PositionBewegen(int wuerfelZahl) {
+    /*
+        Aufzählung zum Abgleich des Status einer Figur.
+        Bspw. kann nun abgeglichen werden:
+        If (Figur.Status == isStarthaus)
+        { 
+           Beweglichkeit = 0;
+        }
+    */
+    public enum Status  
+    {
+        isStartHaus,
+        isLauffeld,
+        isZielHaus;
+    };
+            
+            
+            
+    public void PositionBewegen(int wuerfelZahl) {                
         if (Beweglichkeit)
         {
             Position = Position + wuerfelZahl;
