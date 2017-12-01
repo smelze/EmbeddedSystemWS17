@@ -21,9 +21,10 @@ public class MenschAergereDichNicht {
         FigurRot.PositionSetzen(4);
         System.out.println("Die Figur steht auf Position: " +FigurRot.PositionLesen() );*/ 
 // TODO code application logic here
-        Mensch mensch = new Mensch("Svenja", 3);
-        mensch.FigurAuswaehlen();
-
+        //Mensch mensch = new Mensch("Svenja", 3);
+        //mensch.FigurAuswaehlen();
+        Spielbrett Holzi = new Spielbrett();
+        Holzi.SpielbrettAnzeigen();
     }
     
 }
