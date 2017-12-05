@@ -192,13 +192,14 @@ private int[] checkForcedActionSix(int counterPlayer) {
 private int[] checkPossibleMoves(int diceCount,int playerCounter) {
     //--- local variables ------------------------------------------
     int[] possibleMoves, meeplePositions,returnPositions;
-    int counter,counterCheck,counterPossible=0,targetPosition;
+    int counter,counterCheck,counterPossible=0,targetPosition,startPosition;
     boolean selbstSchlagen;
     char color;
     //--------------------------------------------------------------
 
     color = PlayerList.get(playerCounter).getColor();
     meeplePositions=gameBoard.checkMeeple(color);
+    startPosition=gameBoard.getStartPosition(color);
 
     //ForcedActions
     if (diceCount == 6){
@@ -208,23 +209,31 @@ private int[] checkPossibleMoves(int diceCount,int playerCounter) {
          possibleMoves=checkForcedAction(playerCounter, diceCount);                      
     }
     //Possible Actions if no Forced Actions
+    //check 1 out einfügen ... die nicht
     if (possibleMoves[0]==99){
         for (counter = 0;counter<4;counter++){
-            targetPosition=this.getTargetPosition(meeplePositions[counter], diceCount, playerCounter);
-            //Check ob selbst schlagen
-            selbstSchlagen=false;
-            for (counterCheck=0;counterCheck<4;counterCheck++){
-                if ((targetPosition)==meeplePositions[counterCheck])
-                    selbstSchlagen=true;
+            if (meeplePositions[counter]>startPosition){//ceck ob meeple im out-Bereich
+                targetPosition=this.getTargetPosition(meeplePositions[counter], diceCount, playerCounter);
+                //Check ob selbst schlagen
+                selbstSchlagen=false;
+                for (counterCheck=0;counterCheck<4;counterCheck++){
+                    if ((targetPosition)==meeplePositions[counterCheck])
+                        selbstSchlagen=true;
+                }//Ende check selbst schlagen
+                if(!selbstSchlagen){
+                    possibleMoves[counterPossible]=meeplePositions[counter];
+                    counterPossible++;
+                }
             }
-            if(!selbstSchlagen){
-                possibleMoves[counterPossible]=meeplePositions[counter];
-                counterPossible++;
-            }                    
         }                    
     }
+    else{
+        do{
+            counterPossible++;         
+        }while((counterPossible<4)&&(possibleMoves[counterPossible]!=99));
+    }
     returnPositions = new int[counterPossible];
-    for(counter=0;counter<returnPositions.length;counter++){
+    for(counter=0;counter<counterPossible;counter++){
         returnPositions[counter]=possibleMoves[counter];
     }
     return returnPositions;
@@ -284,55 +293,31 @@ public void initGame() {
  */
 private void loopGame(){
     //--- local variables -----------
-    int counterPlayer=0, counterColor, counterMeeple,counterMeeple2, diceCount, choosedPosition,free,targetPosition;
-    int[] meeplePositions;
+    int counterPlayer=0, diceCount, choosedPosition,targetPosition,counterRollDice=0;
     //char color;
     boolean win=false;
     //-------------------------------
     do{
-        do{
-            PlayerList.get(counterPlayer).startTurn();
-            diceCount=rollDice();
-            choosedPosition = PlayerList.get(counterPlayer).chooseField(checkPossibleMoves(diceCount,counterPlayer));
-            
-            targetPosition=getTargetPosition(choosedPosition,diceCount,counterPlayer);
-            /*        
-            //Hier funkt getTargetPosition einpflegen
-            if((choosedPosition+diceCount)>55){
-                if((choosedPosition+diceCount)<=59){
-                    targetPosition=choosedPosition+diceCount+(counterPlayer*4);
-                }
-                else
-                    targetPosition=choosedPosition+diceCount-39;//falsch
-            }
-            else{
-                targetPosition=choosedPosition+diceCount;
-            }
-            */
-            //Abfrage schlagen muss verbessert werden temporär deaktiviert
-            /*
-            for(counterColor=0;counterColor<4;counterColor++){
-                meeplePositions=gameBoard.checkMeeple(PlayerList.get(counterColor).getColor());
-                free=0+counterColor*4;
-                for(counterMeeple=0;counterMeeple<4;counterMeeple++){
-                    if (meeplePositions[counterMeeple]==targetPosition){
-                        for(counterMeeple2=0;counterMeeple2<4;counterMeeple2++){
-                            if(meeplePositions[counterMeeple2]==free){
-                                free++;
-                                counterMeeple2=0;
-                            }
-                        }
-                        gameBoard.moveMeeple(meeplePositions[counterMeeple], free);
-                        counterMeeple=4;
-                    }
-                }
-            }
-            */
-            gameBoard.moveMeeple(choosedPosition,targetPosition);
-            win=checkWin(counterPlayer);
-            counterPlayer++;
-        }while((counterPlayer < PlayerList.size())&&(!win));
         counterPlayer =0;
+        do{//Alle vier Spieler nacheinander bis win
+            do{//Bis zu 3 mal Würfeln
+                PlayerList.get(counterPlayer).startTurn();
+                diceCount=rollDice();
+                choosedPosition = PlayerList.get(counterPlayer).chooseField(checkPossibleMoves(diceCount,counterPlayer));
+                System.out.println("Du hast folgendes gewählt: "+choosedPosition);
+                targetPosition=getTargetPosition(choosedPosition,diceCount,counterPlayer);
+                System.out.println("Deine Zielposition ist: "+targetPosition);
+                gameBoard.moveMeeple(choosedPosition,targetPosition);
+                //schlagen fehlt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                win=checkWin(counterPlayer);
+                if (this.checkAllOut(counterPlayer))
+                    counterRollDice++;
+                else
+                    counterRollDice=3;
+            }while(counterRollDice<3);
+            counterPlayer++;
+            counterRollDice=0;
+        }while((counterPlayer < PlayerList.size())&&(!win));     
     }while(!win);
     System.out.println("Herzlichen Glückwunsch "+PlayerList.get(counterPlayer).getName()+" Sie haben gewonnen");
 }// End of function loopGame()
@@ -373,39 +358,35 @@ private int getTargetPosition(int meeplePosition,int diceCount, int counterPlaye
     startPosition=gameBoard.getStartPosition(PlayerList.get(counterPlayer).getColor());
     homePosition=gameBoard.getHomePosition(PlayerList.get(counterPlayer).getColor());
     roundEnd=gameBoard.getStartPosition(PlayerList.get(0).getColor())+39;
-    
-    //Abfrage ob im Haus
-    if(((meeplePosition)>=homePosition)&&(meeplePosition<(homePosition+4))){
-        if((meeplePosition+diceCount)<(homePosition+4))
-            targetPosition=meeplePosition+diceCount;
-        else{
-            System.out.println("Error: Zug geht über den Home Bereich hinaus");
-            targetPosition=meeplePosition;//Bleibt auf Position ...doof...in übergeordnetem anders abfangen?
-        }
-    }
-    else{    
-        if(counterPlayer==0){
-            if ((meeplePosition+diceCount)>(startPosition+39)){//Ziel Entweder in neuer Runde oder im Haus
-                if((meeplePosition+diceCount)<=(roundEnd+4))//Ziel im Haus
-                    targetPosition=meeplePosition+diceCount;
-                else
-                    targetPosition=meeplePosition+diceCount-40;//Ziel neue Runde
-            }
-            else
-                targetPosition=meeplePosition+diceCount;//gleiche Runde einfach weiter    
-        }    
-        else{
-            if((meeplePosition<startPosition)&&(meeplePosition+diceCount)>startPosition){//Vor dem Haus + Eingang möglich
+    if(meeplePosition<gameBoard.getStartPosition(PlayerList.get(0).getColor()))//Abfrage ob out
+        targetPosition=startPosition;
+    else
+        if(((meeplePosition)>=homePosition)&&(meeplePosition<(homePosition+4))){//Abfrage ob im Haus
                 targetPosition=meeplePosition+diceCount;
-            }
-            else{
-                if((meeplePosition+diceCount)>roundEnd)//neue Runde
-                    targetPosition=meeplePosition+diceCount-40;
+        }
+        else{    
+            if(counterPlayer==0){
+                if ((meeplePosition+diceCount)>(startPosition+39)){//Ziel Entweder in neuer Runde oder im Haus
+                    if((meeplePosition+diceCount)<=(roundEnd+4))//Ziel im Haus
+                        targetPosition=meeplePosition+diceCount;
+                    else
+                        targetPosition=meeplePosition+diceCount-40;//Ziel neue Runde
+                }
                 else
-                    targetPosition=meeplePosition+diceCount; 
+                    targetPosition=meeplePosition+diceCount;//gleiche Runde einfach weiter    
+            }    
+            else{
+                if((meeplePosition<startPosition)&&(meeplePosition+diceCount)>startPosition){//Vor dem Haus + Eingang möglich
+                    targetPosition=meeplePosition+diceCount;
+                }
+                else{
+                    if((meeplePosition+diceCount)>roundEnd)//neue Runde
+                        targetPosition=meeplePosition+diceCount-40;
+                    else
+                        targetPosition=meeplePosition+diceCount; 
+                }
             }
         }
-    }
     return targetPosition;
 }//End of getTargetPosition()
  
@@ -413,9 +394,11 @@ private boolean checkAllOut(int counterPlayer){
     //--- local variables-------------------------------------
     int counter,counterOut=0,outPosition;
     int[] meeplePositions;
+    char color;
     //--------------------------------------------------------
-    meeplePositions=gameBoard.checkMeeple(PlayerList.get(counterPlayer).getColor());
-    outPosition=gameBoard.getOutPosition(PlayerList.get(counterPlayer).getColor());
+    color=PlayerList.get(counterPlayer).getColor();
+    meeplePositions=gameBoard.checkMeeple(color);
+    outPosition=gameBoard.getOutPosition(color);
     for (counter=0;counter<4;counter++){
         if (meeplePositions[counter]==(outPosition+counterOut)){
             counterOut++;
