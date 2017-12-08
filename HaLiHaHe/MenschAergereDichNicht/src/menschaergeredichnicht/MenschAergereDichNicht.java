@@ -31,7 +31,8 @@ public class MenschAergereDichNicht {
         Mensch spielerGruen = new Mensch("Gruen", 3);
         Mensch spielerBlau  = new Mensch("Blau", 4);
         
-        
+         
+        Holzi.SpielbrettAnzeigen();
         
         
         
