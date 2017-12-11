@@ -25,6 +25,8 @@ private int rollDice() {
     return diceCount;
 }// End of rollDice()
 
+
+//Arbeitet aktuell als check schlagen??
 /**checks if there are Forced Actions for 1<=diceCount<=5
  * Forced Actions are returned within an int[4] wich is filled witch 99s
  * if there are not 4 choosable ForcedActions
@@ -36,7 +38,7 @@ private int rollDice() {
 private int[] checkForcedAction(int playerNumber, int diceCount) {
     //--- local Variables-----------------------------------------------
     int[] meeplePositions, returnPositions={99,99,99,99}, enemyPosition,allEnemyPositions;
-    int counter, counterEnemy,returnCounter=0,counterPlayer=0,targetPosition=0;
+    int counter,returnCounter=0,counterEnemy,counterMeeple,targetPosition;
     char color;
     //------------------------------------------------------------------
     System.out.println("Funktion checkForcedAction gestartet");
@@ -45,7 +47,6 @@ private int[] checkForcedAction(int playerNumber, int diceCount) {
     allEnemyPositions = new int[12];
     switch(color){
         case 'r':
-            counterPlayer=0;
             enemyPosition = gameBoard.checkMeeple('g');
             for (counter=0;counter<4;counter++){
                 allEnemyPositions[counter]=enemyPosition[counter];
@@ -60,7 +61,6 @@ private int[] checkForcedAction(int playerNumber, int diceCount) {
             }
             break;
         case 'g':
-            counterPlayer=1;
             enemyPosition = gameBoard.checkMeeple('r');
             for (counter=0;counter<4;counter++){
                 allEnemyPositions[counter]=enemyPosition[counter];
@@ -75,7 +75,6 @@ private int[] checkForcedAction(int playerNumber, int diceCount) {
             }
             break;
         case 'b':
-            counterPlayer=2;
             enemyPosition = gameBoard.checkMeeple('g');
             for (counter=0;counter<4;counter++){
                 allEnemyPositions[counter]=enemyPosition[counter];
@@ -90,7 +89,6 @@ private int[] checkForcedAction(int playerNumber, int diceCount) {
             }
             break;
         case 'y':
-            counterPlayer=3;
             enemyPosition = gameBoard.checkMeeple('g');
             for (counter=0;counter<4;counter++){
                 allEnemyPositions[counter]=enemyPosition[counter];
@@ -108,30 +106,15 @@ private int[] checkForcedAction(int playerNumber, int diceCount) {
             //add error handling
             break;
     }
-
-
-    for (counter=0;counter<4;counter++)
-        //Überschlag abfangen
-        if((meeplePositions[counter]+diceCount)>55){
-            //HomeBereich
-            if((meeplePositions[counter]+diceCount)<=59){
-                targetPosition=meeplePositions[counter]+diceCount+(counterPlayer*4);
-            }
-            //Überschlag
-            else
-                targetPosition=meeplePositions[counter]+diceCount-39;
-        }
-        //Kein Überschlag
-        else{
-            targetPosition=meeplePositions[counter]+diceCount;
-        }
+    for(counterMeeple=0;counterMeeple<4;counterMeeple++){
+        targetPosition=this.getTargetPosition(meeplePositions[counterMeeple], diceCount, playerNumber);
         for (counterEnemy=0;counterEnemy<12;counterEnemy++)
             if(targetPosition == allEnemyPositions[counterEnemy]){
-                returnPositions[returnCounter] = meeplePositions[counter];
+                returnPositions[returnCounter] = meeplePositions[counterMeeple];
                 returnCounter++;
                 counterEnemy=12;
             }
-
+    }
 
     return returnPositions;
 }//End of CheckForcedActions()
@@ -334,7 +317,6 @@ private void debugAusgabeMeeple(){
         System.out.println(".");
     }
 }//end of debugAusgabeMeeple()
-
 
 /**function checks if the active player wins the game
  * 
