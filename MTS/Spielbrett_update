@@ -1,0 +1,84 @@
+//Die Spieler bekommen die Farben blau, rot, gruen und orange. 
+//Innerhalb der Ausgabe wird jeweils der Anfangsbuchstabe (b,r,g,o) gedruckt.
+//Das Spielfeld wird zunächt als Zeile ausgegeben
+
+package javaapplication1;
+
+public class Spielbrett {
+
+    private char[] SpielfeldArray = new char[40];                               //Anlage eines Array mit den 40 Spielfeldern
+    private final char [] StartBox = new char [4];                              //Array fuer die Startbox
+    private final int [] ZielBox = new int [4];                                 //Array fuer die Zielbox
+    int anzahlSpieler=4;         
+    private char[] FarbeIndikator = {'b','r','g','o'};
+   
+    //Die folgenden Variablen sind nur zum testen der Funktion und müssen in Abfragen 
+    //der entprechenden Werte in den anderen Klassen umgeaendert werden.
+    //boolean inStartBox;
+    //boolean inZielBox;
+    //int FigurPosition = 7;                                                    //Zum testen steht eine Figur auf Feld 7
+ 
+    /*--------------------------------------------------------------------------
+                            Ausgabe des Spielfeldes
+    --------------------------------------------------------------------------*/
+    private void ausgabeSpielfeld (){                                           
+        System.out.println("Spielfeld:");                           
+        for(int i=0; i<40; i++){                                                //Abfrage jedes Feldes auf dem Spielbrett
+            for(int SpielerNr=0; SpielerNr<anzahlSpieler;SpielerNr++){          //Abfrage der Position jeder Figur jedes Spielers
+                for(int FigurNr=0; FigurNr<4;FigurNr++){
+                    if(i==Figur.Position){
+                        SpielfeldArray[i]=FarbeIndikator[SpielerNr];
+                    }else{
+                        SpielfeldArray[i]='x';
+                    }
+                }
+            }
+        }
+        System.out.print(SpielfeldArray);
+        
+    }
+    
+    /*--------------------------------------------------------------------------
+                            Ausgabe der Startbox
+    --------------------------------------------------------------------------*/
+    private void ausgabeStartBoxen(){                                           //Der Status ob eine Figur in der Startbox
+        System.out.println("Startboxen:");                                      //ist wird abgefragt und in die jeweilige   
+        for(int SpielerNr=0; SpielerNr<anzahlSpieler;SpielerNr++){              //StartBox des Spieler eingetragen
+            for(int k=0;k<4;k++){
+                if(Figur.inStartBox=true){
+                    StartBox[k]=FarbeIndikator[SpielerNr];
+                }else{
+                    StartBox[k]='x';
+                }
+            }
+            System.out.println(StartBox);
+        }
+    }
+    /*--------------------------------------------------------------------------
+                            Ausgabe der Zielboxen
+    --------------------------------------------------------------------------*/
+    
+    private void ausgabeZielBoxen(){                                            //Der Status ob eine Figur in der ZielBox 
+    System.out.println("Zielboxen:");                                           //ist, wird abgefragt und in die Zielbox
+        for(int SpielerNr=0; SpielerNr<anzahlSpieler;SpielerNr++){              //mit der richtigen Farbe eingetragen
+            for(int k=0;k<4;k++){
+                if(Figur.inZielBox=true){
+                    ZielBox[k]=FarbeIndikator[SpielerNr];
+                }else{
+                    ZielBox[k]='x';
+                }
+            }
+            System.out.println(StartBox);
+        }
+    }
+    /*--------------------------------------------------------------------------
+                        Die Main zum testen der Klasse    
+    --------------------------------------------------------------------------*/
+    public static void main(String[] args){
+        Spielbrett Brett = new Spielbrett();
+        Figur Figur1 = new Figur();                                             //Erstellen einer Figur zum testen der Klasse
+        Brett.ausgabeStartBoxen();
+        Brett.ausgabeZielBoxen();
+        Brett.ausgabeSpielfeld();
+    }
+}
